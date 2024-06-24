@@ -3,7 +3,9 @@ package gift;
 import gift.exception.NotFoundProductException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController("/api/products")
@@ -37,5 +39,10 @@ public class ProductController {
             throw new NotFoundProductException(id + "를 가진 상품이 존재하지 않습니다.");
         }
         return products.get(id);
+    }
+
+    @GetMapping
+    public List<Product> getProducts() {
+        return new ArrayList<>(products.values());
     }
 }
