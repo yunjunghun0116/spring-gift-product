@@ -45,4 +45,12 @@ public class ProductController {
     public List<Product> getProducts() {
         return new ArrayList<>(products.values());
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        if (!products.containsKey(id)) {
+            throw new NotFoundProductException(id + "를 가진 상품이 존재하지 않습니다.");
+        }
+        products.remove(id);
+    }
 }
