@@ -5,6 +5,8 @@ import gift.dto.ProductDto;
 import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -28,5 +30,9 @@ public class ProductService {
 
     public Product getProduct(Long id) {
         return repository.findById(id);
+    }
+
+    public List<Product> getProducts() {
+        return repository.findAll();
     }
 }
