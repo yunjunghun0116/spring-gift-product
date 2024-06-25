@@ -1,8 +1,8 @@
 package gift.controller;
 
-import gift.Product;
+import gift.model.Product;
+import gift.dto.ProductDto;
 import gift.exception.NotFoundProductException;
-import gift.repository.ProductRepository;
 import gift.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +25,8 @@ public class ProductController {
     Long count = 1L;
 
     @PutMapping("/add")
-    public Product addProduct(@RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
-        var product = new Product(count, name, price, imageUrl);
-        products.put(count++, product);
+    public Product addProduct(@RequestBody ProductDto productDto) {
+        var product = service.addProduct(productDto);
         return product;
     }
 
