@@ -22,7 +22,6 @@ public class ProductRepository {
     }
 
     public void update(Product product) {
-        productIdValidation(product.getId());
         products.put(product.getId(), product);
     }
 

@@ -2,14 +2,10 @@ package gift.controller;
 
 import gift.model.Product;
 import gift.dto.ProductDto;
-import gift.exception.NotFoundProductException;
 import gift.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")

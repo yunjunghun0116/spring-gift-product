@@ -23,7 +23,10 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id, ProductDto productDto) {
-        var product = new Product(id, productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
+        var product = repository.findById(id);
+        product.setName(productDto.getName());
+        product.setPrice(product.getPrice());
+        product.setImageUrl(product.getImageUrl());
         repository.update(product);
         return product;
     }
