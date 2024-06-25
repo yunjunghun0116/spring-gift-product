@@ -1,6 +1,9 @@
-package gift;
+package gift.controller;
 
+import gift.Product;
 import gift.exception.NotFoundProductException;
+import gift.repository.ProductRepository;
+import gift.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,6 +14,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+
+    ProductService service;
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     private final Map<Long, Product> products = new HashMap<>();
 
