@@ -25,4 +25,8 @@ public class ProductService {
         repository.update(product);
         return product;
     }
+
+    public Product getProduct(Long id) {
+        return repository.findById(id);
+    }
 }

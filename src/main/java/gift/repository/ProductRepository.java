@@ -21,4 +21,8 @@ public class ProductRepository {
     public void update(Product product) {
         products.put(product.getId(), product);
     }
+    
+    public Product findById(Long id){
+        return products.get(id);
+    }
 }
