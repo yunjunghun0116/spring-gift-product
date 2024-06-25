@@ -17,4 +17,8 @@ public class ProductRepository {
         product.setId(sequentialId);
         products.put(sequentialId++, product);
     }
+
+    public void update(Product product) {
+        products.put(product.getId(), product);
+    }
 }

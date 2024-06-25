@@ -16,6 +16,7 @@ import java.util.Map;
 public class ProductController {
 
     ProductService service;
+
     public ProductController(ProductService service) {
         this.service = service;
     }
@@ -31,11 +32,9 @@ public class ProductController {
     }
 
     @PatchMapping("/update/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestParam String name, @RequestParam int price, @RequestParam String imageUrl) {
+    public Product updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
         productIdValidation(id);
-        var product = new Product(id, name, price, imageUrl);
-
-        products.put(id, product);
+        var product = service.updateProduct(id, productDto);
         return product;
     }
 
@@ -57,10 +56,9 @@ public class ProductController {
     }
 
     /**
-     * @param id
-     * 만약 존재하지 않는 id를 통해 객체에 접근을 시도할 경우 NotFoundProductException 예외를 발생시킨다.
+     * @param id 만약 존재하지 않는 id를 통해 객체에 접근을 시도할 경우 NotFoundProductException 예외를 발생시킨다.
      */
-    public void productIdValidation(Long id){
+    public void productIdValidation(Long id) {
         if (!products.containsKey(id)) {
             throw new NotFoundProductException(id + "를 가진 상품이 존재하지 않습니다.");
         }

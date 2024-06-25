@@ -14,9 +14,15 @@ public class ProductService {
         this.repository = repository;
     }
 
-    public Product addProduct(ProductDto productDto){
-        var product = new Product(productDto.getName(),productDto.getPrice(),productDto.getImageUrl());
+    public Product addProduct(ProductDto productDto) {
+        var product = new Product(productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
         repository.save(product);
+        return product;
+    }
+
+    public Product updateProduct(Long id, ProductDto productDto) {
+        var product = new Product(id, productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
+        repository.update(product);
         return product;
     }
 }
