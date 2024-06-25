@@ -17,16 +17,16 @@ public class ProductService {
     }
 
     public Product addProduct(ProductDto productDto) {
-        var product = new Product(productDto.getName(), productDto.getPrice(), productDto.getImageUrl());
+        var product = new Product(productDto.name(), productDto.price(), productDto.imageUrl());
         repository.save(product);
         return product;
     }
 
     public Product updateProduct(Long id, ProductDto productDto) {
         var product = repository.findById(id);
-        product.setName(productDto.getName());
-        product.setPrice(product.getPrice());
-        product.setImageUrl(product.getImageUrl());
+        product.setName(productDto.name());
+        product.setPrice(productDto.price());
+        product.setImageUrl(productDto.imageUrl());
         repository.update(product);
         return product;
     }
