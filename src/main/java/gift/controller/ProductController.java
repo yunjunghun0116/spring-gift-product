@@ -50,9 +50,9 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public void deleteProduct(@PathVariable Long id) {
         productIdValidation(id);
-        products.remove(id);
+        service.deleteProduct(id);
     }
 
     /**
