@@ -1,31 +1,11 @@
 package gift.dto;
 
-public class ProductDto {
-    String name;
-    int price;
-    String imageUrl;
+import gift.exception.PriceLessThanZeroException;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
+public record ProductDto(String name, Integer price, String imageUrl) {
+    public ProductDto {
+        if (price < 0) {
+            throw new PriceLessThanZeroException("가격은 0원보다 작을 수 없습니다.");
+        }
     }
 }

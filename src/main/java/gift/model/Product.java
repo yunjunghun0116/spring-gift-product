@@ -3,10 +3,10 @@ package gift.model;
 public class Product{
     private Long id;
     private String name;
-    private int price;
+    private Integer price;
     private String imageUrl;
 
-    public Product(String name, int price, String imageUrl) {
+    public Product(String name, Integer price, String imageUrl) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
