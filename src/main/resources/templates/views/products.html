@@ -17,10 +17,11 @@
     <title>Title</title>
 </head>
 <body>
-<p th:text="|안녕하세요. ${data}님|">안녕하세요. 님</p>
+
 
 
 <div class="container">
+    <p th:text="|안녕하세요. ${data}님|">안녕하세요. 님</p>
     <div class="py-5 text-center">
         <h2>상품 목록</h2></div>
     <div class="row">
@@ -47,8 +48,8 @@
                 <td th:text="${product.getName()}">상품명</td>
                 <td th:text="${product.getPrice()}">상품 가격</td>
                 <td>
-                    <button class="btn btn-primary float-end"
-                            th:onclick="|location.href='@{/products/edit/'+${product.getId()}+'}'|"
+                    <button class="btn btn-primary float-start"
+                            th:onclick="|location.href='@{/products/edit/{id}(id=${product.id})}'|"
                             type="button">
                         상품 수정
                     </button>

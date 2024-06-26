@@ -40,12 +40,27 @@ public class AdminController {
         return "views/addProduct";
     }
 
+    @GetMapping("/edit/{id}")
+    public String getEditForm(@PathVariable Long id, Model model) {
+        Product product = service.getProduct(id);
+        model.addAttribute("product", product);
+        return "views/editProduct";
+    }
+
     @PostMapping("/add")
     public String save(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
         Product product = service.addProduct(productDto);
 
         redirectAttributes.addAttribute("productId", product.getId());
-        redirectAttributes.addAttribute("status", true);
+
+        return "redirect:/products/{productId}";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, @ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
+        Product product = service.updateProduct(id, productDto);
+
+        redirectAttributes.addAttribute("productId", product.getId());
 
         return "redirect:/products/{productId}";
     }
