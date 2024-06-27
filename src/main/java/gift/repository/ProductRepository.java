@@ -2,49 +2,78 @@ package gift.repository;
 
 import gift.exception.NotFoundProductException;
 import gift.model.Product;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class ProductRepository {
 
-    private final Map<Long, Product> products = new HashMap<>();
+    private final JdbcTemplate jdbcTemplate;
+
+    public ProductRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        createProductTable();
+    }
 
     Long sequentialId = 1L;
 
+    public void createProductTable() {
+        var sql = """
+                create table product(
+                    id bigint not null,
+                    name varchar(255),
+                    price int,
+                    image_url varchar(255),
+                    primary key (id)
+                )
+                """;
+        jdbcTemplate.execute(sql);
+    }
+
     public void save(Product product) {
-        product.setId(sequentialId);
-        products.put(sequentialId++, product);
+        var sql = "insert into product (id, name, price, image_url) values (?, ?, ?, ?)";
+        product.setId(sequentialId++);
+        jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
     }
 
     public void update(Product product) {
-        products.put(product.getId(), product);
+        var sql = "update product set name=?, price=?, image_url=? where id = ?";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
-    public Product findById(Long id){
-        productIdValidation(id);
-        return products.get(id);
+    public Product findById(Long id) {
+        var sql = "select id, name, price, image_url from product where id = ?";
+        Product product = jdbcTemplate.queryForObject(
+                sql,
+                (resultSet, rowNum) ->
+                        new Product(
+                                resultSet.getLong("id"),
+                                resultSet.getString("name"),
+                                resultSet.getInt("price"),
+                                resultSet.getString("image_url")
+                        ), id);
+        return product;
     }
 
-    public List<Product> findAll(){
-        return new ArrayList<>(products.values());
+    public List<Product> findAll() {
+        var sql = "select id, name, price, image_url from product";
+        List<Product> products = jdbcTemplate.query(
+                sql,
+                (resultSet, rowNum) ->
+                        new Product(
+                                resultSet.getLong("id"),
+                                resultSet.getString("name"),
+                                resultSet.getInt("price"),
+                                resultSet.getString("image_url")
+                        ));
+        return products;
     }
 
-    public void deleteById(Long id){
-        productIdValidation(id);
-        products.remove(id);
-    }
-
-    /**
-     * @param id 만약 존재하지 않는 id를 통해 객체에 접근을 시도할 경우 NotFoundProductException 예외를 발생시킨다.
-     */
-    public void productIdValidation(Long id) {
-        if (!products.containsKey(id)) {
-            throw new NotFoundProductException(id + "를 가진 상품이 존재하지 않습니다.");
-        }
+    public void deleteById(Long id) {
+        var sql = "delete from product where id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }
