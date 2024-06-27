@@ -18,8 +18,7 @@ public class ProductService {
 
     public Product addProduct(ProductDto productDto) {
         var product = new Product(productDto.name(), productDto.price(), productDto.imageUrl());
-        repository.save(product);
-        return product;
+        return repository.save(product);
     }
 
     public Product updateProduct(Long id, ProductDto productDto) {

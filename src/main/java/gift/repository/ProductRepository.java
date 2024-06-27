@@ -1,42 +1,32 @@
 package gift.repository;
 
-import gift.exception.NotFoundProductException;
 import gift.model.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
 public class ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert jdbcInsert;
 
-    public ProductRepository(JdbcTemplate jdbcTemplate) {
+    public ProductRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) {
         this.jdbcTemplate = jdbcTemplate;
-        createProductTable();
+        this.jdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("product")
+                .usingGeneratedKeyColumns("id");
     }
 
-    Long sequentialId = 1L;
-
-    public void createProductTable() {
-        var sql = """
-                create table product(
-                    id bigint not null,
-                    name varchar(255),
-                    price int,
-                    image_url varchar(255),
-                    primary key (id)
-                )
-                """;
-        jdbcTemplate.execute(sql);
-    }
-
-    public void save(Product product) {
-        var sql = "insert into product (id, name, price, image_url) values (?, ?, ?, ?)";
-        product.setId(sequentialId++);
-        jdbcTemplate.update(sql, product.getId(), product.getName(), product.getPrice(), product.getImageUrl());
+    public Product save(Product product) {
+        var param = new BeanPropertySqlParameterSource(product);
+        Number key = jdbcInsert.executeAndReturnKey(param);
+        product.setId(key.longValue());
+        return product;
     }
 
     public void update(Product product) {
