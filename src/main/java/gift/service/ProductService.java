@@ -2,9 +2,9 @@ package gift.service;
 
 import gift.model.Product;
 import gift.dto.ProductDto;
+import gift.repository.ProductOptionJDBCRepository;
 import gift.repository.ProductOptionRepository;
 import gift.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class ProductService {
 
     public Product addProduct(ProductDto productDto) {
         var product = new Product(productDto.name(), productDto.price(), productDto.imageUrl());
-        return repository.save(product);
+        return repository.insert(product);
     }
 
     public Product updateProduct(Long id, ProductDto productDto) {

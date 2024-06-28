@@ -1,9 +1,8 @@
 package gift.service;
 
-import gift.dto.ProductDto;
 import gift.dto.ProductOptionDto;
-import gift.model.Product;
 import gift.model.ProductOption;
+import gift.repository.ProductOptionJDBCRepository;
 import gift.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +41,7 @@ public class ProductOptionService {
         return repository.findAll(productId);
     }
 
-    public void deleteOption(Long id){
+    public void deleteOption(Long id) {
         repository.deleteById(id);
     }
 }
