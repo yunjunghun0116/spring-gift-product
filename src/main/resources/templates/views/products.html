@@ -24,7 +24,7 @@
             type: 'DELETE',
             success: function (result) {
                 alert('상품이 성공적으로 삭제되었습니다.');
-                window.location.href = '/products';
+                window.location.href = '/admin/products';
             },
             error: function (xhr, status, error) {
                 alert('상품 삭제에 실패했습니다.');
@@ -39,7 +39,7 @@
         <h2>상품 목록</h2></div>
     <div class="row">
         <div class="col">
-            <button class="btn btn-primary float-end" th:onclick="|location.href='@{/products/add}'|" type="button">
+            <button class="btn btn-primary float-end" th:onclick="|location.href='@{/admin/products/add}'|" type="button">
                 상품 등록
             </button>
         </div>
@@ -64,7 +64,7 @@
                 <td th:text="${product.getPrice()}">상품 가격</td>
                 <td>
                     <button class="btn btn-primary float-start"
-                            th:onclick="|location.href='@{/products/edit/{id}(id=${product.id})}'|"
+                            th:onclick="|location.href='@{/admin/products/edit/{id}(id=${product.id})}'|"
                             type="button">
                         상품 수정
                     </button>

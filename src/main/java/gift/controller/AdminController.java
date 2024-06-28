@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/admin")
 public class AdminController {
 
     private final ProductService service;
@@ -20,7 +20,7 @@ public class AdminController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/products")
     public String getProducts(Model model) {
         List<Product> products = service.getProducts();
         model.addAttribute("data", "관리자");
@@ -28,40 +28,40 @@ public class AdminController {
         return "views/products";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/products/{id}")
     public String getProduct(@PathVariable Long id, Model model) {
         Product product = service.getProduct(id);
         model.addAttribute("product", product);
         return "views/product";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/products/add")
     public String getAddForm() {
         return "views/addProduct";
     }
 
-    @GetMapping("/edit/{id}")
+    @PostMapping("/products/add")
+    public String save(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
+        Product product = service.addProduct(productDto);
+
+        redirectAttributes.addAttribute("productId", product.getId());
+
+        return "redirect:/admin/products/{productId}";
+    }
+
+    @GetMapping("/products/edit/{id}")
     public String getEditForm(@PathVariable Long id, Model model) {
         Product product = service.getProduct(id);
         model.addAttribute("product", product);
         return "views/editProduct";
     }
 
-    @PostMapping("/add")
-    public String save(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
-        Product product = service.addProduct(productDto);
-
-        redirectAttributes.addAttribute("productId", product.getId());
-
-        return "redirect:/products/{productId}";
-    }
-
-    @PostMapping("/edit/{id}")
+    @PostMapping("/products/edit/{id}")
     public String edit(@PathVariable Long id, @ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
         Product product = service.updateProduct(id, productDto);
 
         redirectAttributes.addAttribute("productId", product.getId());
 
-        return "redirect:/products/{productId}";
+        return "redirect:/admin/products/{productId}";
     }
 }
