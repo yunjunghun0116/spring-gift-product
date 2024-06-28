@@ -23,4 +23,10 @@ public class ProductOptionController {
         var productOption = service.addOption(productOptionDto);
         return ResponseEntity.ok(productOption);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductOption> getProduct(@PathVariable Long id) {
+        var productOption = service.getOption(id);
+        return ResponseEntity.ok(productOption);
+    }
 }

@@ -27,4 +27,18 @@ public class ProductOptionRepository {
         productOption.setId(key.longValue());
         return productOption;
     }
+
+    public ProductOption findById(Long id) {
+        var sql = "select id, product_id, name, additional_price from product_option where id = ?";
+        ProductOption productOption = jdbcTemplate.queryForObject(
+                sql,
+                (resultSet, rowNum) ->
+                        new ProductOption(
+                                resultSet.getLong("id"),
+                                resultSet.getLong("product_id"),
+                                resultSet.getString("name"),
+                                resultSet.getInt("additional_price")
+                        ), id);
+        return productOption;
+    }
 }

@@ -22,4 +22,8 @@ public class ProductOptionService {
                 productOptionDto.additionalPrice());
         return repository.save(product);
     }
+
+    public ProductOption getOption(Long id) {
+        return repository.findById(id);
+    }
 }
