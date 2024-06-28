@@ -41,8 +41,10 @@ class ProductOptionServiceTest {
     @DisplayName("정상 옵션 추가하기")
     void successOptionAdd() {
         ProductOptionDto productOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
+
         ProductOption savedOption = optionService.addOption(productOptionDto);
-        Assertions.assertThat(savedOption.getName()).isEqualTo("기본");
+        ProductOption findOption = optionService.getOption(savedOption.getId());
+        Assertions.assertThat(findOption.getName()).isEqualTo("기본");
     }
 
     @Test
@@ -55,7 +57,7 @@ class ProductOptionServiceTest {
     @DisplayName("둘 이상의 옵션 추가하기")
     void addOptions() {
         ProductOptionDto normalOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
-        ProductOptionDto size255gbOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
+        ProductOptionDto size255gbOptionDto = new ProductOptionDto(product.getId(), "255gb", 100000);
         optionService.addOption(normalOptionDto);
         optionService.addOption(size255gbOptionDto);
         Assertions.assertThat(optionService.getOptions(product.getId()).size()).isEqualTo(2);
@@ -64,18 +66,28 @@ class ProductOptionServiceTest {
     @Test
     @DisplayName("옵션 수정하기")
     void updateOption() {
+        ProductOptionDto productOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
 
-    }
+        ProductOption savedOption = optionService.addOption(productOptionDto);
 
-    @Test
-    @DisplayName("상품의 모든 옵션 조회하기")
-    void findAllOptionsByProductId() {
+        ProductOptionDto optionUpdateDto = new ProductOptionDto(product.getId(), "노멀", 0);
+        optionService.updateOption(savedOption.getId(),optionUpdateDto);
 
+        ProductOption findOption = optionService.getOption(savedOption.getId());
+        Assertions.assertThat(findOption.getName()).isNotEqualTo("기본");
+        Assertions.assertThat(findOption.getName()).isEqualTo("노멀");
     }
 
     @Test
     @DisplayName("옵션 삭제하기")
     void deleteOption() {
+        ProductOptionDto productOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
+        ProductOption savedOption = optionService.addOption(productOptionDto);
 
+        Assertions.assertThat(optionService.getOptions(product.getId()).size()).isEqualTo(1);
+
+        optionService.deleteOption(savedOption.getId());
+
+        Assertions.assertThat(optionService.getOptions(product.getId()).size()).isEqualTo(0);
     }
 }

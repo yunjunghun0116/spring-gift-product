@@ -3,6 +3,7 @@ package gift.model;
 public class ProductOption {
     private Long id;
     private Long productId;
+
     private String name;
     private Integer additionalPrice;
 
@@ -41,5 +42,13 @@ public class ProductOption {
 
     public void setAdditionalPrice(Integer additionalPrice) {
         this.additionalPrice = additionalPrice;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

@@ -19,13 +19,14 @@ public class ProductOptionService {
     }
 
     public ProductOption addOption(ProductOptionDto productOptionDto) {
-        var product = new ProductOption(productOptionDto.productId(),
+        var product = new ProductOption(
+                productOptionDto.productId(),
                 productOptionDto.name(),
                 productOptionDto.additionalPrice());
         return repository.save(product);
     }
 
-    public ProductOption updateProduct(Long id, ProductOptionDto productOptionDto) {
+    public ProductOption updateOption(Long id, ProductOptionDto productOptionDto) {
         var productOption = repository.findById(id);
         productOption.setName(productOptionDto.name());
         productOption.setAdditionalPrice(productOptionDto.additionalPrice());

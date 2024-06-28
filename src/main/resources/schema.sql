@@ -18,5 +18,4 @@ create table product_option
     additional_price int,
     primary key (id),
     foreign key (product_id) references product (id)
-        on delete cascade
 );
