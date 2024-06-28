@@ -2,7 +2,9 @@ package gift.service;
 
 import gift.model.Product;
 import gift.dto.ProductDto;
+import gift.repository.ProductOptionRepository;
 import gift.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository repository;
+    private final ProductOptionRepository optionRepository;
 
-    public ProductService(ProductRepository repository) {
+    public ProductService(ProductRepository repository, ProductOptionRepository optionRepository) {
         this.repository = repository;
+        this.optionRepository = optionRepository;
     }
 
     public Product addProduct(ProductDto productDto) {
@@ -38,7 +42,8 @@ public class ProductService {
         return repository.findAll();
     }
 
-    public void deleteProduct(Long id){
+    public void deleteProduct(Long id) {
+        optionRepository.deleteByProductId(id);
         repository.deleteById(id);
     }
 }

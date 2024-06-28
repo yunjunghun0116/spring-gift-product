@@ -41,7 +41,7 @@ public class ProductOptionService {
         return repository.findAll(productId);
     }
 
-    public void deleteProduct(Long id){
+    public void deleteOption(Long id){
         repository.deleteById(id);
     }
 }
