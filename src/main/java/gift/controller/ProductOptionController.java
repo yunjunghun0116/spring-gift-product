@@ -43,4 +43,10 @@ public class ProductOptionController {
         var options = service.getOptions(productId);
         return ResponseEntity.ok(options);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        service.deleteProduct(id);
+        return ResponseEntity.ok().build();
+    }
 }

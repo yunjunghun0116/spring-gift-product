@@ -40,4 +40,8 @@ public class ProductOptionService {
     public List<ProductOption> getOptions(Long productId) {
         return repository.findAll(productId);
     }
+
+    public void deleteProduct(Long id){
+        repository.deleteById(id);
+    }
 }

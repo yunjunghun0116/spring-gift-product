@@ -61,4 +61,9 @@ public class ProductOptionRepository {
                         ), productId);
         return products;
     }
+
+    public void deleteById(Long id) {
+        var sql = "delete from product_option where id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
