@@ -7,6 +7,8 @@ import gift.model.ProductOption;
 import gift.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductOptionService {
 
@@ -33,5 +35,9 @@ public class ProductOptionService {
 
     public ProductOption getOption(Long id) {
         return repository.findById(id);
+    }
+
+    public List<ProductOption> getOptions(Long productId) {
+        return repository.findAll(productId);
     }
 }

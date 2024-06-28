@@ -8,6 +8,8 @@ import gift.service.ProductOptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/options")
 public class ProductOptionController {
@@ -34,5 +36,11 @@ public class ProductOptionController {
     public ResponseEntity<ProductOption> getOption(@PathVariable Long id) {
         var productOption = service.getOption(id);
         return ResponseEntity.ok(productOption);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductOption>> getOptions(@RequestParam Long productId) {
+        var options = service.getOptions(productId);
+        return ResponseEntity.ok(options);
     }
 }

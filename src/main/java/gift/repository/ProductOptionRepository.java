@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class ProductOptionRepository {
@@ -45,5 +46,19 @@ public class ProductOptionRepository {
                                 resultSet.getInt("additional_price")
                         ), id);
         return productOption;
+    }
+
+    public List<ProductOption> findAll(Long productId) {
+        var sql = "select id, product_id, name, additional_price from product_option where product_id = ?";
+        List<ProductOption> products = jdbcTemplate.query(
+                sql,
+                (resultSet, rowNum) ->
+                        new ProductOption(
+                                resultSet.getLong("id"),
+                                resultSet.getLong("product_id"),
+                                resultSet.getString("name"),
+                                resultSet.getInt("additional_price")
+                        ), productId);
+        return products;
     }
 }
