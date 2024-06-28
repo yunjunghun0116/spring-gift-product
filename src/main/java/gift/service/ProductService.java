@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    ProductRepository repository;
+    private final ProductRepository repository;
 
     public ProductService(ProductRepository repository) {
         this.repository = repository;

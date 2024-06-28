@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    ProductService service;
+    private final ProductService service;
 
     public ProductController(ProductService service) {
         this.service = service;
