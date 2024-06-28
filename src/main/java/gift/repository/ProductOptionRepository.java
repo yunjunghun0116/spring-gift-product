@@ -28,6 +28,11 @@ public class ProductOptionRepository {
         return productOption;
     }
 
+    public void update(ProductOption productOption) {
+        var sql = "update product_option set name=?, additional_price=? where id = ?";
+        jdbcTemplate.update(sql, productOption.getName(), productOption.getAdditionalPrice(), productOption.getId());
+    }
+
     public ProductOption findById(Long id) {
         var sql = "select id, product_id, name, additional_price from product_option where id = ?";
         ProductOption productOption = jdbcTemplate.queryForObject(

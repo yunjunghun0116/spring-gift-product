@@ -24,8 +24,14 @@ public class ProductOptionController {
         return ResponseEntity.ok(productOption);
     }
 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ProductOption> updateOption(@PathVariable Long id, @RequestBody ProductOptionDto productOptionDto) {
+        var productOption = service.updateProduct(id, productOptionDto);
+        return ResponseEntity.ok(productOption);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<ProductOption> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductOption> getOption(@PathVariable Long id) {
         var productOption = service.getOption(id);
         return ResponseEntity.ok(productOption);
     }
