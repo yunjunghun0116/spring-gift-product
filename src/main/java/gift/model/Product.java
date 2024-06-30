@@ -37,15 +37,13 @@ public class Product {
         return imageUrl;
     }
 
-    public static Product from(ProductDto dto) {
-        return new Product(dto.name(), dto.price(), dto.imageUrl());
+    public void updateFromDto(ProductDto productDto){
+        this.name = productDto.name();
+        this.price = productDto.price();
+        this.imageUrl = productDto.imageUrl();
     }
 
-    public static Product copyWithId(Long id,Product product) {
-        return new Product(id, product.getName(), product.getPrice(), product.getImageUrl());
-    }
-
-    public static Product fromWithId(Long id, ProductDto dto) {
-        return new Product(id, dto.name(), dto.price(), dto.imageUrl());
+    public static Product fromDto(ProductDto productDto) {
+        return new Product(productDto.name(), productDto.price(), productDto.imageUrl());
     }
 }

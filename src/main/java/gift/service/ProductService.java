@@ -21,11 +21,12 @@ public class ProductService {
     }
 
     public Product addProduct(ProductDto productDto) {
-        return repository.insert(Product.from(productDto));
+        return repository.save(Product.fromDto(productDto));
     }
 
     public Product updateProduct(Long id, ProductDto productDto) {
-        var product = Product.fromWithId(id, productDto);
+        var product = repository.findById(id);
+        product.updateFromDto(productDto);
         repository.update(product);
         return product;
     }

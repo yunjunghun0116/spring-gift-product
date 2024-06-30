@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProductRepository {
 
 
-    Product insert(Product product);
+    Product save(Product product);
 
     void update(Product product);
 

@@ -39,15 +39,12 @@ public class ProductOption {
         return additionalPrice;
     }
 
-    public static ProductOption from(ProductOptionDto dto) {
+    public static ProductOption fromDto(ProductOptionDto dto) {
         return new ProductOption(dto.productId(), dto.name(), dto.additionalPrice());
     }
 
-    public static ProductOption copyWithId(Long id, ProductOption productOption) {
-        return new ProductOption(id, productOption.getProductId(), productOption.getName(), productOption.getAdditionalPrice());
-    }
-
-    public static ProductOption fromWithId(Long id, ProductOptionDto dto) {
-        return new ProductOption(id, dto.productId(), dto.name(), dto.additionalPrice());
+    public void updateFromDto(ProductOptionDto productOptionDto) {
+        this.name = productOptionDto.name();
+        this.additionalPrice = productOptionDto.additionalPrice();
     }
 }

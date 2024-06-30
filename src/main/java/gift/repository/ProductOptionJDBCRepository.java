@@ -23,7 +23,7 @@ public class ProductOptionJDBCRepository implements ProductOptionRepository {
     public ProductOption save(ProductOption productOption) {
         var param = new BeanPropertySqlParameterSource(productOption);
         Number key = jdbcInsert.executeAndReturnKey(param);
-        var result = ProductOption.copyWithId(key.longValue(), productOption);
+        ProductOption result = new ProductOption(key.longValue(), productOption.getProductId(), productOption.getName(), productOption.getAdditionalPrice());
         return result;
     }
 

@@ -15,8 +15,8 @@ public class ProductMemoryRepository implements ProductRepository {
 
     private Long sequentialId = 1L;
 
-    public Product insert(Product product) {
-        var result = Product.copyWithId(sequentialId, product);
+    public Product save(Product product) {
+        Product result = new Product(sequentialId, product.getName(), product.getPrice(), product.getImageUrl());
         products.put(sequentialId++, result);
         return result;
     }
