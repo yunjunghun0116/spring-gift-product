@@ -1,6 +1,6 @@
 package gift.controller;
 
-import gift.dto.ProductDto;
+import gift.dto.ProductRequest;
 import gift.model.Product;
 import gift.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -43,8 +43,8 @@ public class AdminController {
     }
 
     @PostMapping("/products/add")
-    public String addProduct(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
-        Product product = service.addProduct(productDto);
+    public String addProduct(@ModelAttribute ProductRequest productRequest, RedirectAttributes redirectAttributes) {
+        Product product = service.addProduct(productRequest);
 
         redirectAttributes.addAttribute("productId", product.getId());
 

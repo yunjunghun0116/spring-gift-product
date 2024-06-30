@@ -1,8 +1,8 @@
 package gift.controller;
 
-import gift.dto.ProductDto;
-import gift.dto.ProductOptionDto;
-import gift.model.Product;
+import gift.dto.ProductOptionRequest;
+import gift.dto.ProductOptionResponse;
+import gift.dto.ProductResponse;
 import gift.model.ProductOption;
 import gift.service.ProductOptionService;
 import org.springframework.http.ResponseEntity;
@@ -22,27 +22,27 @@ public class ProductOptionController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addOption(@RequestBody ProductOptionDto productOptionDto) {
-        var productOption = service.addOption(productOptionDto);
-        return ResponseEntity.created(URI.create("/api/options/"+productOption.getId())).build();
+    public ResponseEntity<Void> addOption(@RequestBody ProductOptionRequest productOptionRequest) {
+        var productOption = service.addOption(productOptionRequest);
+        return ResponseEntity.created(URI.create("/api/options/" + productOption.getId())).build();
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ProductOption> updateOption(@PathVariable Long id, @RequestBody ProductOptionDto productOptionDto) {
-        var productOption = service.updateOption(id, productOptionDto);
-        return ResponseEntity.ok(productOption);
+    public ResponseEntity<ProductOptionResponse> updateOption(@PathVariable Long id, @RequestBody ProductOptionRequest productOptionRequest) {
+        var productOption = service.updateOption(id, productOptionRequest);
+        return ResponseEntity.ok(ProductOptionResponse.from(productOption));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductOption> getOption(@PathVariable Long id) {
+    public ResponseEntity<ProductOptionResponse> getOption(@PathVariable Long id) {
         var productOption = service.getOption(id);
-        return ResponseEntity.ok(productOption);
+        return ResponseEntity.ok(ProductOptionResponse.from(productOption));
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductOption>> getOptions(@RequestParam Long productId) {
+    public ResponseEntity<List<ProductOptionResponse>> getOptions(@RequestParam Long productId) {
         var options = service.getOptions(productId);
-        return ResponseEntity.ok(options);
+        return ResponseEntity.ok(options.stream().map(ProductOptionResponse::from).toList());
     }
 
     @DeleteMapping("/{id}")

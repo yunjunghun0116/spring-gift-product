@@ -1,7 +1,7 @@
 package gift.service;
 
-import gift.dto.ProductDto;
-import gift.dto.ProductOptionDto;
+import gift.dto.ProductRequest;
+import gift.dto.ProductOptionRequest;
 import gift.exception.PriceLessThanZeroException;
 import gift.model.Product;
 import gift.model.ProductOption;
@@ -27,8 +27,8 @@ class ProductOptionServiceTest {
     @BeforeEach
     @DisplayName("옵션에 대한 작업을 수행하기 위한 상품 추가 작업")
     void setUp() {
-        ProductDto productDto = new ProductDto("아이폰16pro", 1800000, "https://image.zdnet.co.kr/2024/03/21/29acda4f841885d2122750fbff5cbd9d.jpg");
-        product = productService.addProduct(productDto);
+        ProductRequest productRequest = new ProductRequest("아이폰16pro", 1800000, "https://image.zdnet.co.kr/2024/03/21/29acda4f841885d2122750fbff5cbd9d.jpg");
+        product = productService.addProduct(productRequest);
     }
 
     @AfterEach
@@ -40,9 +40,9 @@ class ProductOptionServiceTest {
     @Test
     @DisplayName("정상 옵션 추가하기")
     void successOptionAdd() {
-        ProductOptionDto productOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
+        ProductOptionRequest productOptionRequest = new ProductOptionRequest(product.getId(), "기본", 0);
 
-        ProductOption savedOption = optionService.addOption(productOptionDto);
+        ProductOption savedOption = optionService.addOption(productOptionRequest);
         ProductOption findOption = optionService.getOption(savedOption.getId());
         Assertions.assertThat(findOption.getName()).isEqualTo("기본");
     }
@@ -50,14 +50,14 @@ class ProductOptionServiceTest {
     @Test
     @DisplayName("불량 옵션 추가하기")
     void failOptionAdd() {
-        Assertions.assertThatThrownBy(() -> new ProductOptionDto(product.getId(), "기본", -1000)).isInstanceOf(PriceLessThanZeroException.class);
+        Assertions.assertThatThrownBy(() -> new ProductOptionRequest(product.getId(), "기본", -1000)).isInstanceOf(PriceLessThanZeroException.class);
     }
 
     @Test
     @DisplayName("둘 이상의 옵션 추가하기")
     void addOptions() {
-        ProductOptionDto normalOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
-        ProductOptionDto size255gbOptionDto = new ProductOptionDto(product.getId(), "255gb", 100000);
+        ProductOptionRequest normalOptionDto = new ProductOptionRequest(product.getId(), "기본", 0);
+        ProductOptionRequest size255gbOptionDto = new ProductOptionRequest(product.getId(), "255gb", 100000);
         optionService.addOption(normalOptionDto);
         optionService.addOption(size255gbOptionDto);
         Assertions.assertThat(optionService.getOptions(product.getId()).size()).isEqualTo(2);
@@ -66,11 +66,11 @@ class ProductOptionServiceTest {
     @Test
     @DisplayName("옵션 수정하기")
     void updateOption() {
-        ProductOptionDto productOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
+        ProductOptionRequest productOptionRequest = new ProductOptionRequest(product.getId(), "기본", 0);
 
-        ProductOption savedOption = optionService.addOption(productOptionDto);
+        ProductOption savedOption = optionService.addOption(productOptionRequest);
 
-        ProductOptionDto optionUpdateDto = new ProductOptionDto(product.getId(), "노멀", 0);
+        ProductOptionRequest optionUpdateDto = new ProductOptionRequest(product.getId(), "노멀", 0);
         optionService.updateOption(savedOption.getId(),optionUpdateDto);
 
         ProductOption findOption = optionService.getOption(savedOption.getId());
@@ -81,8 +81,8 @@ class ProductOptionServiceTest {
     @Test
     @DisplayName("옵션 삭제하기")
     void deleteOption() {
-        ProductOptionDto productOptionDto = new ProductOptionDto(product.getId(), "기본", 0);
-        ProductOption savedOption = optionService.addOption(productOptionDto);
+        ProductOptionRequest productOptionRequest = new ProductOptionRequest(product.getId(), "기본", 0);
+        ProductOption savedOption = optionService.addOption(productOptionRequest);
 
         Assertions.assertThat(optionService.getOptions(product.getId()).size()).isEqualTo(1);
 

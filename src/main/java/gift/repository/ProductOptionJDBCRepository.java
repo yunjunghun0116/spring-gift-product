@@ -1,6 +1,5 @@
 package gift.repository;
 
-import gift.dto.ProductOptionDto;
 import gift.model.ProductOption;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;

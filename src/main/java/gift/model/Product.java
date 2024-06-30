@@ -1,6 +1,6 @@
 package gift.model;
 
-import gift.dto.ProductDto;
+import gift.dto.ProductRequest;
 
 public class Product {
     private Long id;
@@ -37,13 +37,13 @@ public class Product {
         return imageUrl;
     }
 
-    public void updateFromDto(ProductDto productDto){
-        this.name = productDto.name();
-        this.price = productDto.price();
-        this.imageUrl = productDto.imageUrl();
+    public void updateFromDto(ProductRequest productRequest){
+        this.name = productRequest.name();
+        this.price = productRequest.price();
+        this.imageUrl = productRequest.imageUrl();
     }
 
-    public static Product fromDto(ProductDto productDto) {
-        return new Product(productDto.name(), productDto.price(), productDto.imageUrl());
+    public static Product from(ProductRequest productRequest) {
+        return new Product(productRequest.name(), productRequest.price(), productRequest.imageUrl());
     }
 }

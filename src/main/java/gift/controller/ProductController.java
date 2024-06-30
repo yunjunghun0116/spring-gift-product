@@ -1,7 +1,8 @@
 package gift.controller;
 
+import gift.dto.ProductResponse;
 import gift.model.Product;
-import gift.dto.ProductDto;
+import gift.dto.ProductRequest;
 import gift.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,27 +21,27 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addProduct(@RequestBody ProductDto productDto) {
-        var product = service.addProduct(productDto);
+    public ResponseEntity<Void> addProduct(@RequestBody ProductRequest productRequest) {
+        var product = service.addProduct(productRequest);
         return ResponseEntity.created(URI.create("/api/products/"+product.getId())).build();
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
-        var product = service.updateProduct(id, productDto);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
+        var product = service.updateProduct(id, productRequest);
+        return ResponseEntity.ok(ProductResponse.from(product));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
         var product = service.getProduct(id);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(ProductResponse.from(product));
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<List<ProductResponse>> getProducts() {
         var products = service.getProducts();
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(products.stream().map(ProductResponse::from).toList());
     }
 
     @DeleteMapping("/{id}")

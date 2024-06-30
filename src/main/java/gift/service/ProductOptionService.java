@@ -1,6 +1,6 @@
 package gift.service;
 
-import gift.dto.ProductOptionDto;
+import gift.dto.ProductOptionRequest;
 import gift.model.ProductOption;
 import gift.repository.ProductOptionRepository;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,13 @@ public class ProductOptionService {
         this.repository = repository;
     }
 
-    public ProductOption addOption(ProductOptionDto productOptionDto) {
-        return repository.save(ProductOption.fromDto(productOptionDto));
+    public ProductOption addOption(ProductOptionRequest productOptionRequest) {
+        return repository.save(ProductOption.fromDto(productOptionRequest));
     }
 
-    public ProductOption updateOption(Long id, ProductOptionDto productOptionDto) {
+    public ProductOption updateOption(Long id, ProductOptionRequest productOptionRequest) {
         var productOption = repository.findById(id);
-        productOption.updateFromDto(productOptionDto);
+        productOption.updateFromDto(productOptionRequest);
         repository.update(productOption);
         return productOption;
     }

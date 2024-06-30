@@ -1,6 +1,6 @@
 package gift.service;
 
-import gift.dto.ProductDto;
+import gift.dto.ProductRequest;
 import gift.exception.PriceLessThanZeroException;
 import gift.model.Product;
 import org.assertj.core.api.Assertions;
@@ -28,26 +28,26 @@ class ProductServiceTest {
     @Test
     @DisplayName("정상 상품 추가하기")
     void addProductSuccess() {
-        ProductDto productDto = new ProductDto("상품1", 10000, "이미지 주소");
-        Product savedProduct = service.addProduct(productDto);
+        ProductRequest productRequest = new ProductRequest("상품1", 10000, "이미지 주소");
+        Product savedProduct = service.addProduct(productRequest);
         Assertions.assertThat(savedProduct.getName()).isEqualTo("상품1");
     }
 
     @Test
     @DisplayName("오류 상품 생성하기")
     void addProductFail() {
-        Assertions.assertThatThrownBy(() -> new ProductDto("상품1", -1000, "이미지 주소"))
+        Assertions.assertThatThrownBy(() -> new ProductRequest("상품1", -1000, "이미지 주소"))
                 .isInstanceOf(PriceLessThanZeroException.class);
     }
 
     @Test
     @DisplayName("상품 수정하기")
     void updateProduct() {
-        ProductDto productDto = new ProductDto("상품1", 10000, "이미지 주소");
-        Product savedProduct = service.addProduct(productDto);
+        ProductRequest productRequest = new ProductRequest("상품1", 10000, "이미지 주소");
+        Product savedProduct = service.addProduct(productRequest);
 
         Long id = savedProduct.getId();
-        ProductDto updateDto = new ProductDto("상품1", 7000, "이미지 주소2");
+        ProductRequest updateDto = new ProductRequest("상품1", 7000, "이미지 주소2");
 
         service.updateProduct(id, updateDto);
 
@@ -58,8 +58,8 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 삭제하기")
     void deleteProduct() {
-        ProductDto productDto = new ProductDto("상품1", 10000, "이미지 주소");
-        Product savedProduct = service.addProduct(productDto);
+        ProductRequest productRequest = new ProductRequest("상품1", 10000, "이미지 주소");
+        Product savedProduct = service.addProduct(productRequest);
 
         Assertions.assertThat(service.getProducts().size()).isEqualTo(1);
 

@@ -1,6 +1,5 @@
 package gift.repository;
 
-import gift.dto.ProductDto;
 import gift.exception.NotFoundProductException;
 import gift.model.Product;
 

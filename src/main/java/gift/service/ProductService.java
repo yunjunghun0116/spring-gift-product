@@ -1,8 +1,7 @@
 package gift.service;
 
 import gift.model.Product;
-import gift.dto.ProductDto;
-import gift.repository.ProductOptionJDBCRepository;
+import gift.dto.ProductRequest;
 import gift.repository.ProductOptionRepository;
 import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -20,13 +19,13 @@ public class ProductService {
         this.optionRepository = optionRepository;
     }
 
-    public Product addProduct(ProductDto productDto) {
-        return repository.save(Product.fromDto(productDto));
+    public Product addProduct(ProductRequest productRequest) {
+        return repository.save(Product.from(productRequest));
     }
 
-    public Product updateProduct(Long id, ProductDto productDto) {
+    public Product updateProduct(Long id, ProductRequest productRequest) {
         var product = repository.findById(id);
-        product.updateFromDto(productDto);
+        product.updateFromDto(productRequest);
         repository.update(product);
         return product;
     }
