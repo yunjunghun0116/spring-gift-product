@@ -17,12 +17,12 @@ public class ProductOptionService {
     }
 
     public ProductOption addOption(ProductOptionRequest productOptionRequest) {
-        return repository.save(ProductOption.fromDto(productOptionRequest));
+        return repository.save(ProductOption.from(productOptionRequest));
     }
 
     public ProductOption updateOption(Long id, ProductOptionRequest productOptionRequest) {
         var productOption = repository.findById(id);
-        productOption.updateFromDto(productOptionRequest);
+        productOption.updateFrom(productOptionRequest);
         repository.update(productOption);
         return productOption;
     }

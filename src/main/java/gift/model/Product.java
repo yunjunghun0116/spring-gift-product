@@ -37,7 +37,7 @@ public class Product {
         return imageUrl;
     }
 
-    public void updateFromDto(ProductRequest productRequest){
+    public void updateFrom(ProductRequest productRequest){
         this.name = productRequest.name();
         this.price = productRequest.price();
         this.imageUrl = productRequest.imageUrl();

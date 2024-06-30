@@ -38,12 +38,12 @@ public class ProductOption {
         return additionalPrice;
     }
 
-    public static ProductOption fromDto(ProductOptionRequest dto) {
-        return new ProductOption(dto.productId(), dto.name(), dto.additionalPrice());
-    }
-
-    public void updateFromDto(ProductOptionRequest productOptionRequest) {
+    public void updateFrom(ProductOptionRequest productOptionRequest) {
         this.name = productOptionRequest.name();
         this.additionalPrice = productOptionRequest.additionalPrice();
+    }
+
+    public static ProductOption from(ProductOptionRequest dto) {
+        return new ProductOption(dto.productId(), dto.name(), dto.additionalPrice());
     }
 }

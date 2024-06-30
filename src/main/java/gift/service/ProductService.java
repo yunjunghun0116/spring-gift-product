@@ -25,7 +25,7 @@ public class ProductService {
 
     public Product updateProduct(Long id, ProductRequest productRequest) {
         var product = repository.findById(id);
-        product.updateFromDto(productRequest);
+        product.updateFrom(productRequest);
         repository.update(product);
         return product;
     }
