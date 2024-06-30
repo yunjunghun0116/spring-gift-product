@@ -1,6 +1,7 @@
 package gift.dto;
 
 import gift.exception.PriceLessThanZeroException;
+import gift.model.ProductOption;
 
 public record ProductOptionDto(Long productId, String name, Integer additionalPrice) {
     public ProductOptionDto {

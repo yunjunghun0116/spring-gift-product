@@ -1,10 +1,10 @@
 package gift.repository;
 
+import gift.dto.ProductDto;
 import gift.model.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -25,8 +25,8 @@ public class ProductJDBCRepository implements ProductRepository {
     public Product insert(Product product) {
         var param = new BeanPropertySqlParameterSource(product);
         Number key = jdbcInsert.executeAndReturnKey(param);
-        product.setId(key.longValue());
-        return product;
+        var result = Product.copyWithId(key.longValue(), product);
+        return result;
     }
 
     public void update(Product product) {

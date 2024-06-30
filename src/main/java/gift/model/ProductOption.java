@@ -1,5 +1,8 @@
 package gift.model;
 
+import gift.dto.ProductDto;
+import gift.dto.ProductOptionDto;
+
 public class ProductOption {
     private Long id;
     private Long productId;
@@ -24,31 +27,27 @@ public class ProductOption {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getProductId() {
+        return productId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getAdditionalPrice() {
         return additionalPrice;
     }
 
-    public void setAdditionalPrice(Integer additionalPrice) {
-        this.additionalPrice = additionalPrice;
+    public static ProductOption from(ProductOptionDto dto) {
+        return new ProductOption(dto.productId(), dto.name(), dto.additionalPrice());
     }
 
-    public Long getProductId() {
-        return productId;
+    public static ProductOption copyWithId(Long id, ProductOption productOption) {
+        return new ProductOption(id, productOption.getProductId(), productOption.getName(), productOption.getAdditionalPrice());
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public static ProductOption fromWithId(Long id, ProductOptionDto dto) {
+        return new ProductOption(id, dto.productId(), dto.name(), dto.additionalPrice());
     }
 }

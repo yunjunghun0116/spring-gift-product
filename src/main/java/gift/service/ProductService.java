@@ -21,15 +21,11 @@ public class ProductService {
     }
 
     public Product addProduct(ProductDto productDto) {
-        var product = new Product(productDto.name(), productDto.price(), productDto.imageUrl());
-        return repository.insert(product);
+        return repository.insert(Product.from(productDto));
     }
 
     public Product updateProduct(Long id, ProductDto productDto) {
-        var product = repository.findById(id);
-        product.setName(productDto.name());
-        product.setPrice(productDto.price());
-        product.setImageUrl(productDto.imageUrl());
+        var product = Product.fromWithId(id, productDto);
         repository.update(product);
         return product;
     }

@@ -1,5 +1,6 @@
 package gift.repository;
 
+import gift.dto.ProductDto;
 import gift.exception.NotFoundProductException;
 import gift.model.Product;
 
@@ -12,12 +13,12 @@ public class ProductMemoryRepository implements ProductRepository {
 
     private final Map<Long, Product> products = new HashMap<>();
 
-    Long sequentialId = 1L;
+    private Long sequentialId = 1L;
 
     public Product insert(Product product) {
-        product.setId(sequentialId);
-        products.put(sequentialId++, product);
-        return product;
+        var result = Product.copyWithId(sequentialId, product);
+        products.put(sequentialId++, result);
+        return result;
     }
 
     public void update(Product product) {
@@ -41,7 +42,7 @@ public class ProductMemoryRepository implements ProductRepository {
     /**
      * @param id 만약 존재하지 않는 id를 통해 객체에 접근을 시도할 경우 NotFoundProductException 예외를 발생시킨다.
      */
-    public void productIdValidation(Long id) {
+    private void productIdValidation(Long id) {
         if (!products.containsKey(id)) {
             throw new NotFoundProductException(id + "를 가진 상품이 존재하지 않습니다.");
         }

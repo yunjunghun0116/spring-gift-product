@@ -1,6 +1,8 @@
 package gift.model;
 
-public class Product{
+import gift.dto.ProductDto;
+
+public class Product {
     private Long id;
     private String name;
     private Integer price;
@@ -12,7 +14,7 @@ public class Product{
         this.imageUrl = imageUrl;
     }
 
-    public Product(Long id,String name, Integer price, String imageUrl) {
+    public Product(Long id, String name, Integer price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -23,31 +25,27 @@ public class Product{
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public static Product from(ProductDto dto) {
+        return new Product(dto.name(), dto.price(), dto.imageUrl());
+    }
+
+    public static Product copyWithId(Long id,Product product) {
+        return new Product(id, product.getName(), product.getPrice(), product.getImageUrl());
+    }
+
+    public static Product fromWithId(Long id, ProductDto dto) {
+        return new Product(id, dto.name(), dto.price(), dto.imageUrl());
     }
 }

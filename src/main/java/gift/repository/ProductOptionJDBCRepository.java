@@ -1,5 +1,6 @@
 package gift.repository;
 
+import gift.dto.ProductOptionDto;
 import gift.model.ProductOption;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -8,7 +9,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import javax.sql.DataSource;
 import java.util.List;
 
-public class ProductOptionJDBCRepository implements ProductOptionRepository{
+public class ProductOptionJDBCRepository implements ProductOptionRepository {
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
 
@@ -22,8 +23,8 @@ public class ProductOptionJDBCRepository implements ProductOptionRepository{
     public ProductOption save(ProductOption productOption) {
         var param = new BeanPropertySqlParameterSource(productOption);
         Number key = jdbcInsert.executeAndReturnKey(param);
-        productOption.setId(key.longValue());
-        return productOption;
+        var result = ProductOption.copyWithId(key.longValue(), productOption);
+        return result;
     }
 
     public void update(ProductOption productOption) {
