@@ -8,6 +8,7 @@ import gift.service.ProductOptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,13 +21,13 @@ public class ProductOptionController {
         this.service = service;
     }
 
-    @PutMapping("/add")
-    public ResponseEntity<ProductOption> addOption(@RequestBody ProductOptionDto productOptionDto) {
+    @PostMapping("/add")
+    public ResponseEntity<Void> addOption(@RequestBody ProductOptionDto productOptionDto) {
         var productOption = service.addOption(productOptionDto);
-        return ResponseEntity.ok(productOption);
+        return ResponseEntity.created(URI.create("/api/options/"+productOption.getId())).build();
     }
 
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ProductOption> updateOption(@PathVariable Long id, @RequestBody ProductOptionDto productOptionDto) {
         var productOption = service.updateOption(id, productOptionDto);
         return ResponseEntity.ok(productOption);
@@ -47,6 +48,6 @@ public class ProductOptionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         service.deleteOption(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

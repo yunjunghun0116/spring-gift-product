@@ -6,6 +6,7 @@ import gift.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,13 +19,13 @@ public class ProductController {
         this.service = service;
     }
 
-    @PutMapping("/add")
-    public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto) {
+    @PostMapping("/add")
+    public ResponseEntity<Void> addProduct(@RequestBody ProductDto productDto) {
         var product = service.addProduct(productDto);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.created(URI.create("/api/products/"+product.getId())).build();
     }
 
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
         var product = service.updateProduct(id, productDto);
         return ResponseEntity.ok(product);
@@ -45,6 +46,6 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         service.deleteProduct(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

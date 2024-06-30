@@ -15,24 +15,6 @@
     <title>Title</title>
 </head>
 <body>
-<script>
-    function deleteProduct(button) {
-        const id = button.getAttribute('data-id');
-
-        $.ajax({
-            url: `/api/products/${id}`,
-            type: 'DELETE',
-            success: function (result) {
-                alert('상품이 성공적으로 삭제되었습니다.');
-                window.location.href = '/admin/products';
-            },
-            error: function (xhr, status, error) {
-                alert('상품 삭제에 실패했습니다.');
-                console.error('에러:', error);
-            }
-        })
-    }
-</script>
 <div class="container">
     <p th:text="|안녕하세요. ${data}님|">안녕하세요. 님</p>
     <div class="py-5 text-center">
@@ -82,5 +64,23 @@
         </table>
     </div>
 </div>
+<script>
+    function deleteProduct(button) {
+        const id = button.getAttribute('data-id');
+
+        $.ajax({
+            url: `/api/products/${id}`,
+            type: 'DELETE',
+            success: function (result) {
+                alert('상품이 성공적으로 삭제되었습니다.');
+                window.location.href = '/admin/products';
+            },
+            error: function (xhr, status, error) {
+                alert('상품 삭제에 실패했습니다.');
+                console.error('에러:', error);
+            }
+        })
+    }
+</script>
 </body>
 </html>

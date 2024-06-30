@@ -5,6 +5,8 @@ import gift.model.Product;
 import gift.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,7 +43,7 @@ public class AdminController {
     }
 
     @PostMapping("/products/add")
-    public String save(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
+    public String addProduct(@ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
         Product product = service.addProduct(productDto);
 
         redirectAttributes.addAttribute("productId", product.getId());
@@ -54,14 +56,5 @@ public class AdminController {
         Product product = service.getProduct(id);
         model.addAttribute("product", product);
         return "views/editProduct";
-    }
-
-    @PostMapping("/products/edit/{id}")
-    public String edit(@PathVariable Long id, @ModelAttribute ProductDto productDto, RedirectAttributes redirectAttributes) {
-        Product product = service.updateProduct(id, productDto);
-
-        redirectAttributes.addAttribute("productId", product.getId());
-
-        return "redirect:/admin/products/{productId}";
     }
 }
